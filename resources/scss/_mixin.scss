@@ -1,0 +1,233 @@
+/*반응형, 브라우저 크기가 $mobile 이하일때*/
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+/*반응형, 브라우저 크기가 $mobile+1이상, $tablet 이하일때*/
+@mixin tablet {
+  @media (min-width: $mobile+1) and (max-width: $tablet) {
+    @content;
+  }
+}
+
+/*반응형, 브라우저 크기가 $desktop 이상일때*/
+@mixin desktop {
+  @media (min-width: $desktop) {
+    @content;
+  }
+}
+
+/* text */
+@mixin text12 {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+}
+
+@mixin text14 {
+  font-size: 1.4rem;
+  line-height: 2.1rem;
+}
+
+@mixin text16 {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+}
+
+@mixin text18 {
+  font-size: 1.8rem;
+  line-height: 2.7rem;
+}
+
+@mixin text20 {
+  font-size: 2rem;
+  line-height: 2.8rem;
+}
+
+@mixin text24 {
+  font-size: 2.4rem;
+  line-height: 3.2rem;
+}
+
+@mixin text32 {
+  font-size: 3.2rem;
+  line-height: 4.6rem;
+}
+
+@mixin text40 {
+  font-size: 4rem;
+  line-height: 5.6rem;
+}
+
+/*layout*/
+@mixin contContainer {
+  max-width: $maxWidth;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 5.2rem;
+  padding-right: 5.2rem;
+  box-sizing: border-box;
+
+  @include mobile {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@mixin btnDefault {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+@mixin btnRoundStyle {
+  border-radius: 4px;
+  font-weight: $bold;
+  padding: 0.8rem 2rem;
+  height: 4rem;
+  overflow: hidden;
+}
+
+@mixin clear {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+@mixin ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin hideText {
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: -9999px;
+  line-height: 100%;
+  text-align: left;
+}
+
+@mixin innerScroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  -webkit-appearance: none;
+}
+
+@mixin colGroup($parent: '.parent', $target: '.target', $mg: 3) {
+  $col: 2;
+
+  #{$parent} {
+    #{$target} {
+      box-sizing: border-box;
+    }
+  }
+
+  @while $col < 6 {
+    #{$parent}.col#{$col} {
+      @include flexbox;
+      @include flex-wrap(wrap);
+
+      #{$target} {
+        $mgVal: ($mg * ($col - 1)) * 0.1;
+        width: calc((100% - #{$mgVal}rem) / #{$col});
+        margin-right : #{$mg * 0.1}rem;
+      }
+
+      #{$target}:nth-child(#{$col}n) {
+        margin-right: 0;
+      }
+    }
+
+    $col: $col + 1;
+  }
+}
+
+@mixin hideScrollbar($target: '.bar') {
+  #{$target} {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  #{$target}::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera*/
+  }
+}
+
+@mixin orderNum($target: '.target', $num: '10') {
+  $col: 1;
+
+  @while $col < $num+1 {
+    #{$target}:nth-child(#{$col}):after {
+      content: '#{$col}';
+    }
+
+    $col: $col + 1;
+  }
+}
+
+@mixin triangle($width: '3', $color: '#999') {
+  width: 0px;
+  height: 0px;
+  border-top:#{$width} solid #{$color};
+  border-bottom:#{$width} solid none;
+  border-right: #{$width} solid transparent;
+  border-left: #{$width} solid transparent;
+}
+
+@mixin vBar($color: '#d8d8d8', $height: '1.2rem') {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: block;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 1.2rem;
+  text-align: center;
+  background-color: #{$color};
+}
+
+@mixin inputStyle {
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 2px;
+  border: 1px solid $width-32;
+  background-color: transparent;
+  @include text16;
+  font-weight: $medium;
+  color: $white;
+
+  &::placeholder {
+    color: $width-32
+  }
+}
+
+@mixin inputDisabled {
+  background-color: $width-32;
+}
+
+@mixin inputFocus {
+  border-color: $white;
+}
+@mixin flexCol ($v: center, $h: center, $gap: 0, $wrap: nowrap) {
+  display: flex;
+  flex-direction: column;
+  align-items: $v;
+  justify-content: $h;
+  gap: $gap;
+  flex-wrap: $wrap;
+}
+@mixin flexRow ($color: flex-start, $h: center, $gap: 0, $wrap: nowrap) {
+  display: flex;
+  flex-direction: row;
+  align-items: $h;
+  justify-content: $v;
+  gap: $gap;
+  flex-wrap: $wrap;
+}
